@@ -1,28 +1,32 @@
 # Clase UCC - Aplicativo React con Vite
 
-## Descripción
+## Descripcion
 
-Este proyecto es un aplicativo desarrollado en **React con Vite** para aprender y aplicar **pruebas unitarias** con Jest más la integración continua con GitHub Actions.
+Este proyecto es un aplicativo desarrollado en **React con Vite** para practicar **pruebas unitarias** con Jest y la integracion continua con GitHub Actions.
 
 El aplicativo incluye:
 
-* **Sidebar con acordeón** para navegación.
-* **Componentes de ejemplo** para verificar dependencias.
+* **Sidebar con acordeon** para navegacion.
+* **Componentes de ejemplo** para revisar dependencias.
 * **Ejercicios con pruebas unitarias**:
 
   * Tablas de Multiplicar (`TablasMul.tsx`)
   * Conversor de Unidades (`UnitConverter.tsx`)
-  * Validador de Contraseñas (`PasswordValidator.tsx`)
+  * Validador de Contrasenas (`PasswordValidator.tsx`)
   * Contador de Clics (`ClickCounter.tsx`)
   * Lista de Tareas (`TodoList.tsx`)
 
-* **Módulo de Ciencias Naturales con Three.js**:
+* **Modulo de Ciencias Naturales con Three.js**:
 
   * Sistema Solar Interactivo (`SolarSystem.tsx`)
 
+* **Caso de estudio Construccion con Bloques**:
+
+  * Editor sandbox con bloques voxel (`BlockBuilder.tsx`)
+
 ---
 
-## Instalación
+## Instalacion
 
 Clonar el repositorio:
 
@@ -47,13 +51,13 @@ npm install
 npm run dev
 ```
 
-* **Compilar para producción**
+* **Compilar para produccion**
 
 ```bash
 npm run build
 ```
 
-* **Previsualizar build de producción**
+* **Previsualizar build de produccion**
 
 ```bash
 npm run preview
@@ -80,41 +84,44 @@ npm run format
 
 ---
 
-## Estructura de Carpetas
+## Estructura de carpetas
 
 ```
 src/
-├─ components/       # Componentes reutilizables (Sidebar, UnitConverter, etc.)
-├─ views/            # Vistas de cada ejercicio y ejemplo
-├─ AppRoutes.tsx     # Rutas principales
-└─ main.tsx          # Entrada principal de React
+  components/       # Componentes reutilizables (Sidebar, UnitConverter, etc.)
+  views/            # Vistas de cada ejercicio y ejemplo
+  routes/AppRoutes.tsx
+  main.tsx          # Punto de entrada de React
 ```
 
 ---
 
 ## Componentes y funcionalidades
 
-### Componentes de Pruebas Unitarias
-1. **Sidebar.tsx**: Menú lateral con acordeón, permite agrupar ejercicios y ejemplos.
-2. **UnitConverter.tsx**: Conversor de unidades (Celsius ↔ Fahrenheit) con input controlado.
-3. **PasswordValidator.tsx**: Validador de contraseñas dinámico, muestra requisitos cumplidos.
+### Componentes de pruebas unitarias
+1. **Sidebar.tsx**: Menu lateral con acordeon que agrupa ejercicios y ejemplos.
+2. **UnitConverter.tsx**: Conversor Celsius <-> Fahrenheit con input controlado.
+3. **PasswordValidator.tsx**: Validador de contrasenas dinamico con feedback visual.
 4. **ClickCounter.tsx**: Contador de clics persistente usando `localStorage`.
 5. **TodoList.tsx**: Lista de tareas con agregar y eliminar elementos.
 6. **TablasMul.tsx**: Tabla de multiplicar interactiva.
 
-### Componentes de Ciencias Naturales (Three.js)
-7. **SolarSystem.tsx**: Sistema solar interactivo con planetas orbitando alrededor del Sol.
+### Componentes de ciencias naturales (Three.js)
+7. **SolarSystem.tsx**: Sistema solar interactivo con planetas orbitando al Sol.
+
+### Casos de estudio interactivos
+8. **BlockBuilder.tsx**: Constructor de bloques estilo voxel para experimentar con mundos sandbox.
 
 ---
 
 ## Pruebas unitarias
 
-Las pruebas unitarias están desarrolladas con **Jest** y **React Testing Library**.
+Las pruebas unitarias utilizan **Jest** y **React Testing Library**.
 
-* Validan la correcta interacción de los componentes.
-* Comprobar que `localStorage` persista valores en `ClickCounter`.
-* Verificar la lógica de validación en `PasswordValidator`.
-* Confirmar el funcionamiento de agregar y eliminar tareas en `TodoList`.
+* Validan la interaccion correcta de los componentes.
+* Comprueban que `localStorage` persista valores en `ClickCounter`.
+* Verifican la logica de validacion en `PasswordValidator`.
+* Confirman el flujo de agregar y eliminar tareas en `TodoList`.
 * Aseguran que los componentes principales rendericen correctamente.
 
 Ejecutar todas las pruebas:
@@ -127,35 +134,34 @@ npm test
 
 ## Consideraciones
 
-* Se recomienda **investigar, analizar e interpretar cada ejercicio** antes de ejecutar pruebas unitarias.
-* Las pruebas serán evaluadas de manera **individual en clase**, considerando la explicación del proceso y la solución aplicada.
+* Investiga, analiza e interpreta cada ejercicio antes de ejecutar pruebas unitarias.
+* Las pruebas se evaluan de forma individual en clase, incluyendo la explicacion del proceso y la solucion.
 
 ---
 
-## Tecnologías utilizadas
+## Tecnologias utilizadas
 
-### Framework y Librerías principales
-* `react`, `react-dom`, `react-router-dom` - Framework web y enrutamiento
-* `three` - Biblioteca 3D para gráficos WebGL
-* `tailwindcss` - Framework CSS utilitario
-* `framer-motion` - Animaciones y transiciones
-* `react-icons` - Iconos vectoriales
+### Frameworks y librerias principales
+* `react`, `react-dom`, `react-router-dom` - Framework web y enrutamiento.
+* `three` - Biblioteca 3D para graficos WebGL.
+* `tailwindcss` - Framework CSS utilitario.
+* `framer-motion` - Animaciones y transiciones.
+* `react-icons` - Iconos vectoriales.
 
-### Testing y Calidad
-* `jest`, `@testing-library/react`, `@testing-library/jest-dom`, `@types/jest` - Framework de testing
-* `eslint`, `prettier` - Linting y formateo de código
-* `typescript` - Tipado estático
+### Testing y calidad
+* `jest`, `@testing-library/react`, `@testing-library/jest-dom`, `@types/jest` - Stack de testing.
+* `eslint`, `prettier` - Linting y formateo de codigo.
+* `typescript` - Tipado estatico.
 
-### Integración Continua
-* GitHub Actions - CI/CD automatizado
-* Workflows configurados para múltiples versiones de Node.js
-* Testing automático en push y pull requests
+### Integracion continua
+* GitHub Actions - CI/CD automatizado.
+* Workflows configurados para multiples versiones de Node.js.
+* Testing automatico en push y pull requests.
 
 ---
 
 ## Autor
 
-**Gustavo Sánchez Rodríguez**
-Asignatura: Ingeniería Web
+**Gustavo Sanchez Rodriguez**
+Asignatura: Ingenieria Web
 Clase UCC
-

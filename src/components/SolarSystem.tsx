@@ -18,7 +18,6 @@ export default function SolarSystem() {
   const sceneRef = useRef<THREE.Scene>();
   const rendererRef = useRef<THREE.WebGLRenderer>();
   const animationIdRef = useRef<number>();
-  const controlsRef = useRef<any>();
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
@@ -194,7 +193,7 @@ export default function SolarSystem() {
     const labels: THREE.Sprite[] = [];
 
     // Create planets
-    planets.forEach((planet, index) => {
+    planets.forEach((planet) => {
       const planetGroup = new THREE.Group();
 
       // Planet geometry with higher detail
@@ -216,7 +215,7 @@ export default function SolarSystem() {
 
       // Add moons
       if (planet.moons) {
-        planet.moons.forEach((moon, moonIndex) => {
+        planet.moons.forEach((moon) => {
           const moonGeometry = new THREE.SphereGeometry(moon.radius, 16, 16);
           const moonMaterial = new THREE.MeshLambertMaterial({ color: 0xcccccc });
           const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
