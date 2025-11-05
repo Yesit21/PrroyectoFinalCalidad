@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaHome, FaCube, FaColumns, FaMicrophone, FaShapes, FaCalculator, FaRuler, FaKey, FaMouse, FaList } from "react-icons/fa";
+import { FaHome, FaCube, FaColumns, FaMicrophone, FaShapes, FaCalculator, FaRuler, FaKey, FaMouse, FaList, FaSun, FaWater, FaPaw, FaWind } from "react-icons/fa";
 
 interface SidebarItem {
   label: string;
@@ -16,6 +16,13 @@ const mainItems: SidebarItem[] = [
   { label: "Figuras Geometricas", route: "/three_2", icon: <FaShapes /> },
 ];
 
+const scienceItems: SidebarItem[] = [
+  { label: "Sistema Solar Interactivo", route: "/sistema-solar", icon: <FaSun /> },
+  { label: "Ciclo del Agua 3D", route: "/ciclo-agua", icon: <FaWater /> },
+  { label: "Clasificación de Animales", route: "/clasificacion-animales", icon: <FaPaw /> },
+  { label: "Energía Eólica", route: "/energia-eolica", icon: <FaWind /> },
+];
+
 const exerciseItems: SidebarItem[] = [
   { label: "Tablas de Multiplicar", route: "/tablasmul", icon: <FaCalculator /> },
   { label: "Conversor de Unidades", route: "/conversorunid", icon: <FaRuler /> },
@@ -27,6 +34,7 @@ const exerciseItems: SidebarItem[] = [
 export default function Sidebar() {
   const [openMain, setOpenMain] = useState(false);
   const [openExercises, setOpenExercises] = useState(false);
+  const [openScience, setOpenScience] = useState(false);
 
   const renderNavItem = ({ label, route, icon }: SidebarItem) => (
     <NavLink
@@ -60,13 +68,24 @@ export default function Sidebar() {
         {/* Acordeón Exercises */}
         <button
           onClick={() => setOpenExercises(!openExercises)}
-          className="w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 
+          className="w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300
                      hover:bg-slate-50 dark:hover:bg-slate-800 font-medium"
         >
           Ejercicios - Jtest
           <span>{openExercises ? "▲" : "▼"}</span>
         </button>
         {openExercises && <div className="pl-4 space-y-1">{exerciseItems.map(renderNavItem)}</div>}
+
+        {/* Acordeón Science */}
+        <button
+          onClick={() => setOpenScience(!openScience)}
+          className="w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300
+                     hover:bg-slate-50 dark:hover:bg-slate-800 font-medium"
+        >
+          Ciencias Naturales
+          <span>{openScience ? "▲" : "▼"}</span>
+        </button>
+        {openScience && <div className="pl-4 space-y-1">{scienceItems.map(renderNavItem)}</div>}
 
       </div>
     </aside>

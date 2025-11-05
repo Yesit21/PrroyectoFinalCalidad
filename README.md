@@ -16,6 +16,13 @@ El aplicativo incluye:
   * Contador de Clics (`ClickCounter.tsx`)
   * Lista de Tareas (`TodoList.tsx`)
 
+* **Módulo de Ciencias Naturales con Three.js**:
+
+  * Sistema Solar Interactivo (`SolarSystem.tsx`)
+  * Ciclo del Agua en 3D (`WaterCycle.tsx`)
+  * Clasificación de Animales con Modelos 3D (`AnimalClassification.tsx`)
+  * Simulación de Energía Eólica (`Windmill.tsx`)
+
 ---
 
 ## Instalación
@@ -90,12 +97,19 @@ src/
 
 ## Componentes y funcionalidades
 
+### Componentes de Pruebas Unitarias
 1. **Sidebar.tsx**: Menú lateral con acordeón, permite agrupar ejercicios y ejemplos.
 2. **UnitConverter.tsx**: Conversor de unidades (Celsius ↔ Fahrenheit) con input controlado.
 3. **PasswordValidator.tsx**: Validador de contraseñas dinámico, muestra requisitos cumplidos.
 4. **ClickCounter.tsx**: Contador de clics persistente usando `localStorage`.
 5. **TodoList.tsx**: Lista de tareas con agregar y eliminar elementos.
 6. **TablasMul.tsx**: Tabla de multiplicar interactiva.
+
+### Componentes de Ciencias Naturales (Three.js)
+7. **SolarSystem.tsx**: Sistema solar interactivo con planetas orbitando alrededor del Sol.
+8. **WaterCycle.tsx**: Simulación 3D del ciclo del agua con evaporación, condensación, precipitación y escorrentía.
+9. **AnimalClassification.tsx**: Clasificación interactiva de animales por tipo (mamíferos, aves, reptiles, peces, anfibios, invertebrados).
+10. **Windmill.tsx**: Simulación de energía eólica con molino de viento que genera energía según la velocidad del viento.
 
 ---
 
@@ -124,13 +138,24 @@ npm test
 
 ---
 
-## Dependencias principales
+## Tecnologías utilizadas
 
-* `react`, `react-dom`, `react-router-dom`
-* `three`
-* `tailwindcss`
-* `framer-motion`
-* `jest`, `@testing-library/react`, `@testing-library/jest-dom`, `@types/jest`
+### Framework y Librerías principales
+* `react`, `react-dom`, `react-router-dom` - Framework web y enrutamiento
+* `three` - Biblioteca 3D para gráficos WebGL
+* `tailwindcss` - Framework CSS utilitario
+* `framer-motion` - Animaciones y transiciones
+* `react-icons` - Iconos vectoriales
+
+### Testing y Calidad
+* `jest`, `@testing-library/react`, `@testing-library/jest-dom`, `@types/jest` - Framework de testing
+* `eslint`, `prettier` - Linting y formateo de código
+* `typescript` - Tipado estático
+
+### Integración Continua
+* GitHub Actions - CI/CD automatizado
+* Workflows configurados para múltiples versiones de Node.js
+* Testing automático en push y pull requests
 
 ---
 

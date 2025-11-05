@@ -13,6 +13,10 @@ import ConversorUnid from "../views/ConversorUnid";
 import ValidContrasena from "../views/ValidContrasena";
 import ContadorClics from "../views/ContadorClics";
 import ListaTareas from "../views/ListaTareas";
+import SolarSystemView from "../views/SolarSystemView";
+import WaterCycleView from "../views/WaterCycleView";
+import AnimalClassificationView from "../views/AnimalClassificationView";
+import WindmillView from "../views/WindmillView";
 
 export default function AppRoutes() {
   return (
@@ -29,6 +33,10 @@ export default function AppRoutes() {
         <Route path="validcontrasena" element={<ValidContrasena />} />
         <Route path="contadorclics" element={<ContadorClics />} />
         <Route path="listareas" element={<ListaTareas />} />
+        <Route path="sistema-solar" element={<SolarSystemView />} />
+        <Route path="ciclo-agua" element={<WaterCycleView />} />
+        <Route path="clasificacion-animales" element={<AnimalClassificationView />} />
+        <Route path="energia-eolica" element={<WindmillView />} />
       </Route>
     </Routes>
   );
