@@ -15,6 +15,7 @@ import ContadorClics from "../views/ContadorClics";
 import ListaTareas from "../views/ListaTareas";
 import SolarSystemView from "../views/SolarSystemView";
 import BlockBuilderView from "../views/BlockBuilderView";
+import GlobeView from "../views/GlobeView";
 
 export default function AppRoutes() {
   return (
@@ -33,6 +34,7 @@ export default function AppRoutes() {
         <Route path="listareas" element={<ListaTareas />} />
         <Route path="sistema-solar" element={<SolarSystemView />} />
         <Route path="block-builder" element={<BlockBuilderView />} />
+        <Route path="globo" element={<GlobeView />} />
       </Route>
     </Routes>
   );

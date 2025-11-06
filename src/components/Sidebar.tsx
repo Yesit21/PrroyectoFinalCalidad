@@ -13,6 +13,7 @@ import {
   FaList,
   FaSun,
   FaCubes,
+  FaGlobeAmericas, // 🌍 nuevo icono para Sociales
 } from "react-icons/fa";
 
 interface SidebarItem {
@@ -45,11 +46,17 @@ const scienceItems: SidebarItem[] = [
   { label: "Sistema Solar Interactivo", route: "/sistema-solar", icon: <FaSun /> },
 ];
 
+// 🌍 Nueva sección: Sociales
+const socialItems: SidebarItem[] = [
+  { label: "Globo Interactivo", route: "/globo", icon: <FaGlobeAmericas /> },
+];
+
 export default function Sidebar() {
   const [openMain, setOpenMain] = useState(false);
   const [openCaseStudies, setOpenCaseStudies] = useState(false);
   const [openExercises, setOpenExercises] = useState(false);
   const [openScience, setOpenScience] = useState(false);
+  const [openSocial, setOpenSocial] = useState(false); // 👈 nuevo estado
 
   const renderNavItem = ({ label, route, icon }: SidebarItem) => (
     <NavLink
@@ -115,6 +122,17 @@ export default function Sidebar() {
           <span>{openScience ? "-" : "+"}</span>
         </button>
         {openScience && <div className="pl-4 space-y-1">{scienceItems.map(renderNavItem)}</div>}
+
+        {/* 🌍 Acordeon Sociales */}
+        <button
+          onClick={() => setOpenSocial(!openSocial)}
+          className="w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300
+                     hover:bg-slate-50 dark:hover:bg-slate-800 font-medium"
+        >
+          Sociales
+          <span>{openSocial ? "-" : "+"}</span>
+        </button>
+        {openSocial && <div className="pl-4 space-y-1">{socialItems.map(renderNavItem)}</div>}
       </div>
     </aside>
   );
