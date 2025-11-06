@@ -159,12 +159,15 @@ const GlobeComponent: React.FC = () => {
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
         backgroundColor="rgba(0,0,0,1)"
         pointsData={regions}
-        pointLat={(d: RegionInfo) => d.lat}
-        pointLng={(d: RegionInfo) => d.lng}
+        pointLat={(d) => (d as RegionInfo).lat}
+        pointLng={(d) => (d as RegionInfo).lng}
         pointColor={() => "orange"}
         pointAltitude={0.02}
         pointRadius={0.6}
-        onPointClick={(point: RegionInfo) => setSelectedRegion(point.region)}
+        onPointClick={(point: object) => {
+          const regionPoint = point as RegionInfo;
+          setSelectedRegion(regionPoint.region);
+        }}
         showAtmosphere={true}
         atmosphereColor="lightskyblue"
         atmosphereAltitude={0.2}
