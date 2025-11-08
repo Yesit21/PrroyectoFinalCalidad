@@ -125,7 +125,7 @@ export default function SolarSystem() {
     const orbitLines: THREE.Mesh[] = [];
 
     // Crear planetas
-    planets.forEach((planet, index) => {
+    planets.forEach((planet) => {
       const planetGroup = new THREE.Group();
 
       // Planeta
