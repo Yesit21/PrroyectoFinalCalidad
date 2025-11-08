@@ -55,6 +55,7 @@ export default function SolarSystem() {
   const [enableNarration, setEnableNarration] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
   const [currentQuiz, setCurrentQuiz] = useState<any>(null);
+  const [quizResult, setQuizResult] = useState<string | null>(null);
   const [autoRotate, setAutoRotate] = useState(true);
 
   useEffect(() => {
@@ -268,11 +269,13 @@ export default function SolarSystem() {
 
   const answerQuiz = (selectedIndex: number) => {
     if (currentQuiz && selectedIndex === currentQuiz.correct) {
-      speakText('¡Respuesta correcta! ' + currentQuiz.explanation);
-      alert('¡Correcto! 🎉\n\n' + currentQuiz.explanation);
+      const message = '¡Respuesta correcta! ' + currentQuiz.explanation;
+      speakText(message);
+      setQuizResult(message);
     } else {
-      speakText('Respuesta incorrecta. Inténtalo de nuevo.');
-      alert('Incorrecto. Inténtalo de nuevo. 🤔');
+      const message = 'Respuesta incorrecta. Inténtalo de nuevo.';
+      speakText(message);
+      setQuizResult(message);
     }
     setShowQuiz(false);
     setCurrentQuiz(null);
@@ -350,6 +353,11 @@ export default function SolarSystem() {
             >
               🎯 Hacer Quiz sobre {selectedPlanetData.name}
             </button>
+            {quizResult && (
+              <div className={`p-3 rounded-lg mb-3 ${quizResult.includes('correcta') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                {quizResult}
+              </div>
+            )}
           </div>
         ) : (
           <p className="text-gray-500 text-sm">Haz clic en un planeta para ver su información</p>
