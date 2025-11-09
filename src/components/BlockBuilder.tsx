@@ -17,8 +17,40 @@ export default function BlockBuilder() {
   const pointerRef = useRef(new THREE.Vector2());
   const groundRef = useRef<THREE.Mesh>();
   const blocksRef = useRef<Map<string, THREE.Mesh>>(new Map());
+  const orbitState = useRef({
+    isDragging: false,
+    lastX: 0,
+    lastY: 0,
+    radius: 28,
+    polar: Math.PI / 3,
+    azimuth: Math.PI / 4,
+    dragPointerId: null as number | null,
+  });
   const [materialKey, setMaterialKey] =
     useState<keyof typeof BLOCK_COLORS>("grass");
+
+  const updateCameraPosition = () => {
+    if (!cameraRef.current) return;
+    const { radius, polar, azimuth } = orbitState.current;
+    const x = radius * Math.sin(polar) * Math.cos(azimuth);
+    const y = radius * Math.cos(polar);
+    const z = radius * Math.sin(polar) * Math.sin(azimuth);
+    cameraRef.current.position.set(x, y, z);
+    cameraRef.current.lookAt(0, 0, 0);
+  };
+
+  const nudgeCamera = (deltaAzimuth = 0, deltaPolar = 0, deltaRadius = 0) => {
+    orbitState.current.azimuth += deltaAzimuth;
+    orbitState.current.polar = Math.max(
+      0.2,
+      Math.min(Math.PI / 2 - 0.05, orbitState.current.polar + deltaPolar),
+    );
+    orbitState.current.radius = Math.max(
+      8,
+      Math.min(60, orbitState.current.radius + deltaRadius),
+    );
+    updateCameraPosition();
+  };
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -38,6 +70,10 @@ export default function BlockBuilder() {
     camera.position.set(12, 16, 20);
     camera.lookAt(0, 0, 0);
     cameraRef.current = camera;
+    const radius = camera.position.length();
+    orbitState.current.radius = radius;
+    orbitState.current.polar = Math.acos(camera.position.y / radius);
+    orbitState.current.azimuth = Math.atan2(camera.position.z, camera.position.x);
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -87,6 +123,7 @@ export default function BlockBuilder() {
     window.addEventListener("resize", handleResize);
 
     const animate = () => {
+      updateCameraPosition();
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
     };
@@ -131,7 +168,21 @@ export default function BlockBuilder() {
     }
   };
 
-  const handlePointer = (event: React.PointerEvent<HTMLDivElement>) => {
+  const handleCameraDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!orbitState.current.isDragging || !cameraRef.current) return;
+
+    const deltaX = event.clientX - orbitState.current.lastX;
+    const deltaY = event.clientY - orbitState.current.lastY;
+    orbitState.current.lastX = event.clientX;
+    orbitState.current.lastY = event.clientY;
+
+    const rotationSpeed = 0.005;
+    orbitState.current.azimuth -= deltaX * rotationSpeed;
+    orbitState.current.polar -= deltaY * rotationSpeed;
+    orbitState.current.polar = Math.max(0.2, Math.min(Math.PI / 2 - 0.05, orbitState.current.polar));
+  };
+
+  const handlePointerInteraction = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!rendererRef.current || !cameraRef.current || !groundRef.current) return;
 
     const rect = rendererRef.current.domElement.getBoundingClientRect();
@@ -169,6 +220,43 @@ export default function BlockBuilder() {
     }
   };
 
+  const handleCanvasPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.button === 2 || event.altKey) {
+      event.preventDefault();
+      orbitState.current.isDragging = true;
+      orbitState.current.lastX = event.clientX;
+      orbitState.current.lastY = event.clientY;
+      orbitState.current.dragPointerId = event.pointerId;
+      event.currentTarget.setPointerCapture?.(event.pointerId);
+      return;
+    }
+
+    if (event.button !== 0) return;
+    event.preventDefault();
+    handlePointerInteraction(event);
+  };
+
+  const handleCanvasPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (orbitState.current.isDragging) {
+      handleCameraDrag(event);
+    }
+  };
+
+  const handleCanvasPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (
+      orbitState.current.isDragging &&
+      orbitState.current.dragPointerId === event.pointerId
+    ) {
+      orbitState.current.isDragging = false;
+      orbitState.current.dragPointerId = null;
+      event.currentTarget.releasePointerCapture?.(event.pointerId);
+    }
+  };
+
+  const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    nudgeCamera(0, 0, event.deltaY * 0.02);
+  };
+
   return (
     <section className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
@@ -188,14 +276,74 @@ export default function BlockBuilder() {
             {key}
           </button>
         ))}
-        <span className="text-sm text-slate-500 dark:text-slate-400">
-          Click para colocar bloques, Shift + click para eliminarlos.
-        </span>
+        <div className="text-sm text-slate-500 dark:text-slate-400">
+          <p>Click izquierdo: colocar bloques · Shift + click: eliminar.</p>
+          <p>Arrastra con clic derecho/Alt o usa los botones para mover la cámara.</p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-300">
+        <div>
+          <span className="font-semibold block mb-1">Rotar</span>
+          <div className="flex gap-2">
+            <button
+              onClick={() => nudgeCamera(-0.2, 0, 0)}
+              className="rounded-md border border-slate-300 px-3 py-2 font-semibold hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+            >
+              ◀
+            </button>
+            <button
+              onClick={() => nudgeCamera(0.2, 0, 0)}
+              className="rounded-md border border-slate-300 px-3 py-2 font-semibold hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+            >
+              ▶
+            </button>
+          </div>
+        </div>
+        <div>
+          <span className="font-semibold block mb-1">Inclinación</span>
+          <div className="flex gap-2">
+            <button
+              onClick={() => nudgeCamera(0, -0.15, 0)}
+              className="rounded-md border border-slate-300 px-3 py-2 font-semibold hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+            >
+              ▲
+            </button>
+            <button
+              onClick={() => nudgeCamera(0, 0.15, 0)}
+              className="rounded-md border border-slate-300 px-3 py-2 font-semibold hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+            >
+              ▼
+            </button>
+          </div>
+        </div>
+        <div>
+          <span className="font-semibold block mb-1">Zoom</span>
+          <div className="flex gap-2">
+            <button
+              onClick={() => nudgeCamera(0, 0, -2)}
+              className="rounded-md border border-slate-300 px-3 py-2 font-semibold hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+            >
+              +
+            </button>
+            <button
+              onClick={() => nudgeCamera(0, 0, 2)}
+              className="rounded-md border border-slate-300 px-3 py-2 font-semibold hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+            >
+              −
+            </button>
+          </div>
+        </div>
       </div>
       <div
         ref={mountRef}
-        onPointerDown={handlePointer}
-        className="h-[70vh] w-full rounded-lg border border-slate-300 bg-slate-200 shadow-inner dark:border-slate-700 dark:bg-slate-800"
+        onPointerDown={handleCanvasPointerDown}
+        onPointerMove={handleCanvasPointerMove}
+        onPointerUp={handleCanvasPointerUp}
+        onPointerLeave={handleCanvasPointerUp}
+        onWheel={handleWheel}
+        onContextMenu={(event) => event.preventDefault()}
+        className="mx-auto h-[260px] w-full max-w-[720px] rounded-lg border border-slate-300 bg-slate-200 shadow-inner dark:border-slate-700 dark:bg-slate-800 sm:h-[300px] md:h-[340px] lg:h-[380px]"
       />
     </section>
   );

@@ -12,8 +12,8 @@ import {
   FaMouse,
   FaList,
   FaSun,
+  FaGlobeAmericas,
   FaCubes,
-  FaGlobeAmericas, // 🌍 nuevo icono para Sociales
 } from "react-icons/fa";
 
 interface SidebarItem {
@@ -30,10 +30,6 @@ const mainItems: SidebarItem[] = [
   { label: "Figuras Geometricas", route: "/three_2", icon: <FaShapes /> },
 ];
 
-const caseStudyItems: SidebarItem[] = [
-  { label: "Construccion con Bloques", route: "/block-builder", icon: <FaCubes /> },
-];
-
 const exerciseItems: SidebarItem[] = [
   { label: "Tablas de Multiplicar", route: "/tablasmul", icon: <FaCalculator /> },
   { label: "Conversor de Unidades", route: "/conversorunid", icon: <FaRuler /> },
@@ -46,17 +42,20 @@ const scienceItems: SidebarItem[] = [
   { label: "Sistema Solar Interactivo", route: "/sistema-solar", icon: <FaSun /> },
 ];
 
-// 🌍 Nueva sección: Sociales
 const socialItems: SidebarItem[] = [
   { label: "Globo Interactivo", route: "/globo", icon: <FaGlobeAmericas /> },
 ];
 
+const techLogicItems: SidebarItem[] = [
+  { label: "Construccion con Bloques", route: "/block-builder", icon: <FaCubes /> },
+];
+
 export default function Sidebar() {
   const [openMain, setOpenMain] = useState(false);
-  const [openCaseStudies, setOpenCaseStudies] = useState(false);
   const [openExercises, setOpenExercises] = useState(false);
   const [openScience, setOpenScience] = useState(false);
-  const [openSocial, setOpenSocial] = useState(false); // 👈 nuevo estado
+  const [openSocial, setOpenSocial] = useState(false);
+  const [openTechLogic, setOpenTechLogic] = useState(false);
 
   const renderNavItem = ({ label, route, icon }: SidebarItem) => (
     <NavLink
@@ -74,65 +73,38 @@ export default function Sidebar() {
     </NavLink>
   );
 
+  const renderSection = (
+    title: string,
+    isOpen: boolean,
+    toggle: () => void,
+    items: SidebarItem[],
+  ) => (
+    <>
+      <button
+        onClick={toggle}
+        className="w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 
+                   hover:bg-slate-50 dark:hover:bg-slate-800 font-medium"
+      >
+        {title}
+        <span>{isOpen ? "-" : "+"}</span>
+      </button>
+      {isOpen && <div className="pl-4 space-y-1">{items.map(renderNavItem)}</div>}
+    </>
+  );
+
   return (
     <aside className="hidden md:block w-full md:w-[240px] border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
       <div className="p-3 space-y-1">
-        {/* Acordeon Main Items */}
-        <button
-          onClick={() => setOpenMain(!openMain)}
-          className="w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 
-                     hover:bg-slate-50 dark:hover:bg-slate-800 font-medium"
-        >
-          Menu Principal
-          <span>{openMain ? "-" : "+"}</span>
-        </button>
-        {openMain && <div className="pl-4 space-y-1">{mainItems.map(renderNavItem)}</div>}
-
-        {/* Acordeon Case Studies */}
-        <button
-          onClick={() => setOpenCaseStudies(!openCaseStudies)}
-          className="w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300
-                     hover:bg-slate-50 dark:hover:bg-slate-800 font-medium"
-        >
-          Casos de Estudio
-          <span>{openCaseStudies ? "-" : "+"}</span>
-        </button>
-        {openCaseStudies && (
-          <div className="pl-4 space-y-1">{caseStudyItems.map(renderNavItem)}</div>
+        {renderSection("Menu Principal", openMain, () => setOpenMain(!openMain), mainItems)}
+        {renderSection("Ejercicios - Jtest", openExercises, () => setOpenExercises(!openExercises), exerciseItems)}
+        {renderSection("Ciencias Naturales", openScience, () => setOpenScience(!openScience), scienceItems)}
+        {renderSection(
+          "Tecnologia y Pensamiento Logico",
+          openTechLogic,
+          () => setOpenTechLogic(!openTechLogic),
+          techLogicItems,
         )}
-
-        {/* Acordeon Exercises */}
-        <button
-          onClick={() => setOpenExercises(!openExercises)}
-          className="w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300
-                     hover:bg-slate-50 dark:hover:bg-slate-800 font-medium"
-        >
-          Ejercicios - Jtest
-          <span>{openExercises ? "-" : "+"}</span>
-        </button>
-        {openExercises && <div className="pl-4 space-y-1">{exerciseItems.map(renderNavItem)}</div>}
-
-        {/* Acordeon Science */}
-        <button
-          onClick={() => setOpenScience(!openScience)}
-          className="w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300
-                     hover:bg-slate-50 dark:hover:bg-slate-800 font-medium"
-        >
-          Ciencias Naturales
-          <span>{openScience ? "-" : "+"}</span>
-        </button>
-        {openScience && <div className="pl-4 space-y-1">{scienceItems.map(renderNavItem)}</div>}
-
-        {/* 🌍 Acordeon Sociales */}
-        <button
-          onClick={() => setOpenSocial(!openSocial)}
-          className="w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300
-                     hover:bg-slate-50 dark:hover:bg-slate-800 font-medium"
-        >
-          Sociales
-          <span>{openSocial ? "-" : "+"}</span>
-        </button>
-        {openSocial && <div className="pl-4 space-y-1">{socialItems.map(renderNavItem)}</div>}
+        {renderSection("Sociales", openSocial, () => setOpenSocial(!openSocial), socialItems)}
       </div>
     </aside>
   );
