@@ -10,12 +10,12 @@ const BLOCK_COLORS = {
 
 export default function BlockBuilder() {
   const mountRef = useRef<HTMLDivElement>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer>();
-  const sceneRef = useRef<THREE.Scene>();
-  const cameraRef = useRef<THREE.PerspectiveCamera>();
+  const rendererRef = useRef<THREE.WebGLRenderer>(new THREE.WebGLRenderer());
+  const sceneRef = useRef<THREE.Scene>(new THREE.Scene());
+  const cameraRef = useRef<THREE.PerspectiveCamera>(new THREE.PerspectiveCamera());
   const raycasterRef = useRef(new THREE.Raycaster());
   const pointerRef = useRef(new THREE.Vector2());
-  const groundRef = useRef<THREE.Mesh>();
+  const groundRef = useRef<THREE.Mesh>(new THREE.Mesh());
   const blocksRef = useRef<Map<string, THREE.Mesh>>(new Map());
   const orbitState = useRef({
     isDragging: false,
