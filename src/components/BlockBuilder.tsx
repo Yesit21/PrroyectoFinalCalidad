@@ -10,12 +10,12 @@ const BLOCK_COLORS = {
 
 export default function BlockBuilder() {
   const mountRef = useRef<HTMLDivElement>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer>(new THREE.WebGLRenderer());
-  const sceneRef = useRef<THREE.Scene>(new THREE.Scene());
-  const cameraRef = useRef<THREE.PerspectiveCamera>(new THREE.PerspectiveCamera());
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const raycasterRef = useRef(new THREE.Raycaster());
   const pointerRef = useRef(new THREE.Vector2());
-  const groundRef = useRef<THREE.Mesh>(new THREE.Mesh());
+  const groundRef = useRef<THREE.Mesh | null>(null);
   const blocksRef = useRef<Map<string, THREE.Mesh>>(new Map());
   const orbitState = useRef({
     isDragging: false,
@@ -343,6 +343,7 @@ export default function BlockBuilder() {
         onPointerLeave={handleCanvasPointerUp}
         onWheel={handleWheel}
         onContextMenu={(event) => event.preventDefault()}
+        data-testid="block-builder-canvas"
         className="mx-auto h-[260px] w-full max-w-[720px] rounded-lg border border-slate-300 bg-slate-200 shadow-inner dark:border-slate-700 dark:bg-slate-800 sm:h-[300px] md:h-[340px] lg:h-[380px]"
       />
     </section>
