@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`GlobeComponent snapshot del componente base 1`] = `
+<DocumentFragment>
+  <div
+    style="width: 100%; height: 100vh; position: relative; overflow: hidden;"
+  >
+    <div>
+      <div
+        data-testid="globe"
+      >
+        Globo simulado
+      </div>
+      <button
+        data-testid="pais1"
+      >
+        Colombia
+      </button>
+      <button
+        data-testid="pais2"
+      >
+        China
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
