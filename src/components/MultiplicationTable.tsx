@@ -1,4 +1,9 @@
-// src\components\MultiplicationTable.tsx
+/**
+ * Componente MultiplicationTable - Generador de tablas de multiplicar
+ *
+ * Componente educativo que permite generar tablas de multiplicar
+ * para cualquier número entero. Muestra los resultados del 1 al 10.
+ */
 import { useState } from "react";
 
 export default function MultiplicationTable() {

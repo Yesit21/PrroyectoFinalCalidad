@@ -1,3 +1,9 @@
+/**
+ * Componente ClickCounter - Contador de clics con persistencia
+ *
+ * Componente interactivo que cuenta los clics del usuario y guarda
+ * el contador en localStorage para persistencia entre sesiones.
+ */
 import { useEffect, useState } from "react";
 
 export default function ClickCounter() {

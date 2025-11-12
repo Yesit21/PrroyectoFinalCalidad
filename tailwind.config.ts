@@ -1,3 +1,14 @@
+/**
+ * Configuración de TailwindCSS para el proyecto UCC Prácticas
+ *
+ * Configuración personalizada con:
+ * - Tema oscuro/claro por clase
+ * - Colores amigables para niños (tonos suaves y alegres)
+ * - Paleta "fun" con nombres descriptivos
+ * - Animaciones personalizadas (float, glow, etc.)
+ * - Sombras y efectos visuales
+ * - Tipografía optimizada
+ */
 import type { Config } from 'tailwindcss'
 
 export default {

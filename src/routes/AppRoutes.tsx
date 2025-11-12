@@ -1,3 +1,12 @@
+/**
+ * Configuración de rutas principales de la aplicación
+ *
+ * Define la estructura de navegación con dos niveles:
+ * - "/" : Página de bienvenida (WelcomeView)
+ * - "/app/*" : Aplicación principal con layout (Navbar + Sidebar)
+ *
+ * Incluye rutas para todas las experiencias educativas disponibles.
+ */
 import { Routes, Route } from "react-router-dom";
 import Layout from "../components/Layout";
 

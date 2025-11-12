@@ -1,3 +1,13 @@
+/**
+ * Componente Sidebar - Panel lateral de navegación
+ *
+ * Sidebar colapsable con secciones organizadas por categorías:
+ * - Ciencias: Sistema Solar
+ * - Tecnología: Block Builder
+ * - Sociales: Globo Interactivo
+ *
+ * Incluye animaciones fluidas, indicadores visuales y navegación intuitiva
+ */
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,6 +18,9 @@ import {
   FaChevronDown,
 } from "react-icons/fa";
 
+/**
+ * Interfaz para items de navegación en el sidebar
+ */
 interface SidebarItem {
   label: string;
   route: string;

@@ -1,3 +1,10 @@
+/**
+ * Vista HomePage - Página principal con landing page moderna
+ *
+ * Página de inicio con diseño moderno que presenta las características
+ * principales del proyecto. Incluye animaciones, estadísticas y
+ * navegación a diferentes secciones de la aplicación.
+ */
 import { motion } from "framer-motion";
 import { FaRocket, FaCode, FaPalette, FaGlobe, FaSun, FaCubes } from "react-icons/fa";
 

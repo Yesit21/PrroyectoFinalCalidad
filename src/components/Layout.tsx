@@ -1,3 +1,13 @@
+/**
+ * Componente Layout - Estructura principal de la aplicación
+ *
+ * Layout base que incluye:
+ * - Sidebar lateral de navegación
+ * - Navbar superior con controles
+ * - Área de contenido principal con animaciones
+ * - Fondo degradado responsivo
+ * - Soporte para tema oscuro/claro
+ */
 import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import Sidebar from "./Sidebar";

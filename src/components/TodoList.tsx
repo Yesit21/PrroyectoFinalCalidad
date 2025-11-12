@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+/**
+ * Componente TodoList - Lista de tareas interactiva
+ * Permite agregar y eliminar tareas de una lista
+ */
 export default function TodoList() {
   const [tasks, setTasks] = useState<string[]>([]);
   const [newTask, setNewTask] = useState("");

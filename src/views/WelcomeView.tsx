@@ -1,3 +1,10 @@
+/**
+ * Vista WelcomeView - Página de bienvenida principal
+ *
+ * Página de entrada de la aplicación que presenta las áreas de aprendizaje
+ * disponibles: Ciencias, Tecnología y Sociales. Incluye navegación
+ * interactiva con emojis y cards descriptivas.
+ */
 import { useNavigate } from "react-router-dom";
 
 export default function WelcomeView() {

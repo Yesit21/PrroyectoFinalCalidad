@@ -1,3 +1,11 @@
+/**
+ * Componente UnitConverter - Conversor de temperatura Celsius a Fahrenheit
+ *
+ * Componente educativo que convierte temperaturas de grados Celsius
+ * a grados Fahrenheit usando la fórmula: °F = (°C × 9/5) + 32
+ *
+ * Incluye imagen de referencia de la fórmula de conversión.
+ */
 import { useState } from "react";
 
 export default function UnitConverter() {

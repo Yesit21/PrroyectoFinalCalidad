@@ -1,4 +1,13 @@
-// src/components/Navbar.tsx
+/**
+ * Componente Navbar - Barra de navegación principal
+ *
+ * Barra de navegación superior con funcionalidades de:
+ * - Navegación al Welcome (botón Home)
+ * - Cambio de tema oscuro/claro
+ * - Menú móvil responsivo
+ * - Indicador de página actual
+ * - Animaciones fluidas con Framer Motion
+ */
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaSun, FaMoon, FaBars, FaTimes, FaHome } from "react-icons/fa";

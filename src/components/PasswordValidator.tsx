@@ -1,3 +1,13 @@
+/**
+ * Componente PasswordValidator - Validador de contraseñas
+ *
+ * Componente que valida contraseñas en tiempo real según reglas predefinidas:
+ * - Longitud mínima de 8 caracteres
+ * - Al menos un número
+ * - Al menos una letra mayúscula
+ *
+ * Muestra feedback visual inmediato sobre el cumplimiento de cada regla.
+ */
 import { useState } from "react";
 
 export default function PasswordValidator() {
