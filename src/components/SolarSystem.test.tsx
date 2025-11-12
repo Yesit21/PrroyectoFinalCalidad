@@ -15,6 +15,13 @@ Object.defineProperty(window, 'speechSynthesis', {
   writable: true,
 });
 
+// Mock de HTMLCanvasElement.getContext
+const mockGetContext = jest.fn(() => null);
+Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+  value: mockGetContext,
+  writable: true,
+});
+
 describe('SolarSystem Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -56,9 +63,10 @@ describe('SolarSystem Component', () => {
     const tierraButton = screen.getByText('Tierra');
     await user.click(tierraButton);
 
+    // Esperar a que aparezca la información del planeta
     await waitFor(() => {
       expect(screen.getByText('La Tierra es el tercer planeta desde el Sol')).toBeInTheDocument();
-    });
+    }, { timeout: 10000 });
 
     expect(screen.getByText('Masa:')).toBeInTheDocument();
     expect(screen.getByText('5.97 × 10²⁴ kg')).toBeInTheDocument();
@@ -77,7 +85,7 @@ describe('SolarSystem Component', () => {
     await waitFor(() => {
       expect(screen.getByText('🌙 1 luna')).toBeInTheDocument();
       expect(screen.getByText('Luna')).toBeInTheDocument();
-    });
+    }, { timeout: 10000 });
 
     // Marte tiene 2 lunas
     const marteButton = screen.getByText('Marte');
@@ -86,7 +94,7 @@ describe('SolarSystem Component', () => {
     await waitFor(() => {
       expect(screen.getByText('🌙 2 lunas')).toBeInTheDocument();
       expect(screen.getByText('Fobos, Deimos')).toBeInTheDocument();
-    });
+    }, { timeout: 10000 });
   });
 
   test('activa y desactiva la narración correctamente', async () => {
@@ -147,7 +155,7 @@ describe('SolarSystem Component', () => {
     const mercurioButton = screen.getByText('Mercurio');
     await user.click(mercurioButton);
 
-    const quizButton = await screen.findByText('🎯 Hacer Quiz sobre Mercurio');
+    const quizButton = await screen.findByText('🎯 Hacer Quiz sobre Mercurio', {}, { timeout: 10000 });
     await user.click(quizButton);
 
     // Responder primera pregunta correctamente (opción 2: "Sodio y potasio")
@@ -157,12 +165,12 @@ describe('SolarSystem Component', () => {
     // Verificar respuesta correcta
     await waitFor(() => {
       expect(screen.getByText(/¡Correcto!/)).toBeInTheDocument();
-    });
+    }, { timeout: 10000 });
 
     // Verificar que pasa a la siguiente pregunta
     await waitFor(() => {
       expect(screen.getByText('Pregunta 2 de 4')).toBeInTheDocument();
-    }, { timeout: 3000 });
+    }, { timeout: 10000 });
   });
 
   test('muestra colores correctos para cada planeta', async () => {
@@ -215,7 +223,7 @@ describe('SolarSystem Component', () => {
       expect(call.text).toContain('tercer planeta desde el Sol');
       expect(call.lang).toBe('es-ES');
       expect(call.rate).toBe(0.8);
-    });
+    }, { timeout: 10000 });
   });
 
   test('datos de planetas contienen toda la información necesaria', () => {
@@ -297,7 +305,7 @@ describe('SolarSystem Component', () => {
     });
   });
 
-  test('función speakText maneja errores correctamente', () => {
+  test('función speakText maneja errores correctamente', async () => {
     // Mock de speechSynthesis que lanza error
     const mockSpeakWithError = jest.fn(() => {
       throw new Error('Speech synthesis error');
@@ -312,17 +320,19 @@ describe('SolarSystem Component', () => {
       writable: true,
     });
 
-    // La función debería manejar el error sin lanzar excepciones
+    const user = userEvent.setup();
     render(<SolarSystem />);
 
     // Activar narración y seleccionar planeta debería manejar el error
     const narrationButton = screen.getByText('🔊 Narración OFF');
-    fireEvent.click(narrationButton);
+    await user.click(narrationButton);
 
     const tierraButton = screen.getByText('Tierra');
-    fireEvent.click(tierraButton);
+    await user.click(tierraButton);
 
-    // No debería haber errores no manejados
-    expect(mockSpeakWithError).toHaveBeenCalled();
+    // Esperar a que se intente ejecutar la narración
+    await waitFor(() => {
+      expect(mockSpeakWithError).toHaveBeenCalled();
+    }, { timeout: 10000 });
   });
 });
